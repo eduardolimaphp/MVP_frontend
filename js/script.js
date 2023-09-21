@@ -28,10 +28,69 @@ function listarProdutos() {
                 <td>${produto.nome_produto}</td>
                 <td>R$ ${parseFloat(produto.preco_produto).toFixed(2)}</td>
                 <td>${produto.quantidade_produto}</td>
-                <td><button onclick="deletarProduto(${produto.id})" class="btn btn-danger btn-sm">Deletar</button></td>
+                <td><button onclick="prepararVenda(${produto.id}, ${produto.quantidade_produto})" data-bs-toggle="modal" data-bs-target="#vendaModal" class="btn btn-success btn-sm">Realizar Venda</button>
+                <button onclick="deletarProduto_completo(${produto.id})" class="btn btn-danger btn-sm">Excluir Produto</button></td>
             </tr>`;
         }));
 }
+
+
+let produtoVendaId = null;
+let quantidadeMaxima = null;
+
+function prepararVenda(id, quantidade) {
+    produtoVendaId = id;
+    quantidadeMaxima = quantidade;
+    document.getElementById('quantidade_venda').max = quantidade;
+}
+
+function confirmarVenda() {
+    if (produtoVendaId) {
+        const quantidadeVenda = parseInt(document.getElementById('quantidade_venda').value);
+        if (quantidadeVenda > 0 && quantidadeVenda <= quantidadeMaxima) {
+            // Aqui, você pode fazer uma chamada API para confirmar a venda.
+            // Para o propósito deste exemplo, apenas decrementamos a quantidade do produto.
+
+            // Você pode substituir esta parte por uma chamada API real
+            console.log(`Vendeu ${quantidadeVenda} do produto de ID: ${produtoVendaId}`);
+            
+            // Atualiza a quantidade no servidor
+            const novaQuantidade = quantidadeMaxima - quantidadeVenda;
+            fetch(`http://127.0.0.1:5000/produtos/${produtoVendaId}`, {
+                method: 'PUT',  // Assuma que PUT é o método para atualizar um produto
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    quantidade_produto: novaQuantidade
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log(`Vendeu ${quantidadeVenda} do produto de ID: ${produtoVendaId}. Nova quantidade: ${novaQuantidade}`);
+                } else {
+                    console.error('Erro ao vender o produto:', data.message);
+                }
+            })
+            .catch(error => console.error('Erro ao fazer a chamada API:', error));
+
+            
+            // Fim da parte substituível
+
+            // Fechar modal
+            var modalVenda = new bootstrap.Modal(document.getElementById('vendaModal'));
+            modalVenda.hide();
+            
+            listarProdutos(); // Atualize a lista após a venda.
+        } else {
+            console.error('Quantidade de venda inválida.');
+        }
+    } else {
+        console.error('Produto não selecionado para venda.');
+    }
+}
+
 
 
 function cadastrarProduto(event) {
@@ -63,7 +122,7 @@ function cadastrarProduto(event) {
 
 function deletarProduto_completo(id) {
     if (id) {
-        fetch(`http://127.0.0.1:5000/produtos/${id}`, {
+        fetch(`http://127.0.0.1:5000/produtos/removeregistro/${id}`, {
             method: 'DELETE',
         })
             .then(response => response.json())
@@ -87,43 +146,51 @@ function exibirProduto(id) {
         });
 }
 
-function buscarProdutoPorID() {
-    const id = document.getElementById('buscar_produto_id').value;
-    if (id) {
-        fetch(`http://127.0.0.1:5000/produtos/${id}`, {
-            method: 'GET',
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                const tabela = document.getElementById('lista-produtos');
-                if (data.error || !data.id) { // Verifique se a resposta contém um erro ou se o ID do produto está ausente
-                    tabela.innerHTML = `<tr>
-                        <td colspan="6">Produto não encontrado</td>
-                    </tr>`;
-                } else {
-                    tabela.innerHTML = `<tr>
-                        <td>${data.id}</td>
-                        <td>${data.data_de_cadastro}</td>
-                        <td>${data.nome_produto}</td>
-                        <td>${data.preco_produto}</td>
-                        <td>${data.quantidade_produto}</td>
-                        <td><button onclick="deletarProduto(${data.id})" class="btn btn-danger btn-sm">Deletar</button></td>
+function confirmarVenda() {
+    if (produtoVendaId) {
+        const quantidadeVenda = parseInt(document.getElementById('quantidade_venda').value);
+        if (quantidadeVenda > 0 && quantidadeVenda <= quantidadeMaxima) {
+            // Calcula a nova quantidade após a venda
+            const novaQuantidade = quantidadeMaxima - quantidadeVenda;
 
-                    </tr>`;
+            // Criar FormData para armazenar os dados
+            const formData = new FormData();
+            formData.append('quantidade_produto', novaQuantidade);
+
+            // Atualiza a quantidade no servidor
+            fetch(`http://127.0.0.1:5000/produtos/${produtoVendaId}`, {
+                method: 'PUT',  // Assuma que PUT é o método para atualizar um produto
+                body: formData
+            })
+            .then(response => {
+                if (response.status === 200) {
+                    return response.json();
+                } else {
+                    throw new Error(`Error with status: ${response.status}`);
                 }
             })
+            .then(data => {
+                console.log(`Vendeu ${quantidadeVenda} do produto de ID: ${produtoVendaId}. Nova quantidade: ${novaQuantidade}`);
+            })
             .catch(error => {
-                console.error('Erro:', error);
-                const tabela = document.getElementById('lista-produtos');
-                tabela.innerHTML = `<tr>
-                    <td colspan="5">Produto não encontrado</td>
-                </tr>`;
+                console.error('Erro ao vender o produto:', error);
+            })
+            .finally(() => {
+                // Fechar modal
+                var modalVenda = new bootstrap.Modal(document.getElementById('vendaModal'));
+                modalVenda.hide();
+
+                listarProdutos(); // Atualize a lista após a venda.
             });
+        } else {
+            console.error('Quantidade de venda inválida.');
+        }
     } else {
-        console.error('ID do produto não especificado.');
+        console.error('Produto não selecionado para venda.');
     }
 }
+
+
 
 function deletarProduto(id) {
     if (id) {

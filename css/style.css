@@ -32,6 +32,9 @@ body {
     margin-bottom: 20px;
 }
 
+th, tr, td{
+    text-align: center;
+}
 
 /* v1
 
