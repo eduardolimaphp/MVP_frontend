@@ -1,82 +1,78 @@
 body {
-    font-family: 'Arial, sans-serif';
-    background-color: #f0f0f0;
-    color: #333;
-    margin: 0;
+    /* Descomente a linha abaixo e substitua #f8f9fa pela cor que deseja usar como cor de fundo */
+    /* background-color: #f8f9fa; */
+    background-image: url('../img/background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center center;
 }
 
-form,
 .container {
-    max-width: 600px;
-    margin: 20px auto;
+    background-color: white;
     padding: 20px;
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-button {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    background-color: #28a745;
-    color: #fff;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #218838;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
+    border-radius: 15px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
 }
 
-table,
-th,
-td {
-    border: 1px solid #ccc;
+.form-label {
+    font-weight: 500;
 }
 
-th,
-td {
-    padding: 8px;
-    text-align: left;
+.table th {
+    font-weight: 500;
 }
 
-th {
-    background-color: #f9f9f9;
+.linhasep {
+    border-width: 10px;
+    border-style: solid;
+    border-color: red;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
-#produto-detalhes {
-    background-color: #fff;
-    padding: 15px;
-    border-radius: 5px;
+
+/* v1
+
+body {
+    background-image: url('../img/background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 .container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.container div {
-    display: flex;
-    gap: 10px;
+.form-label {
+    font-weight: 500;
 }
+
+.table th {
+    font-weight: 500;
+}
+
+.container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-label {
+    font-weight: 500;
+}
+
+.table th {
+    font-weight: 500;
+}
+
+.linhasep {
+    border: 10px solid red;
+}
+*/
