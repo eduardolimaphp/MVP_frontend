@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/script.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <form id="produto-form" onsubmit="cadastrarProduto(event)">
+        <label for="data_de_cadastro">Data de Cadastro:</label>
+        <input type="date" id="data_de_cadastro" name="data_de_cadastro"><br>
+        <label for="nome_produto">Nome do Produto:</label>
+        <input type="text" id="nome_produto" name="nome_produto"><br>
+        <label for="preco_produto">Preço:</label>
+        <input type="text" id="preco_produto" name="preco_produto"><br>
+        <label for="quantidade_produto">Quantidade:</label>
+        <input type="text" id="quantidade_produto" name="quantidade_produto"><br>
+        <button type="submit">Cadastrar</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Data de Cadastro</th>
+                <th>Nome</th>
+                <th>Preço</th>
+                <th>Quantidade</th>
+            </tr>
+        </thead>
+        <tbody id="lista-produtos">
+        </tbody>
+    </table>
+
+    <div>
+        <label for="produto_id">Deletar Produto por ID:</label>
+        <input type="text" id="produto_id">
+        <button type="button" id="botao-toggle" onclick=toggleListarProdutos()>Exibir</button>
+        <button type="button" onclick="deletarProduto()">Deletar</button>
+    </div>
+
+    <div id="produto-detalhes">
+    </div>
+
+</body>
+
+</html>
