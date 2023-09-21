@@ -108,6 +108,8 @@ function buscarProdutoPorID() {
                         <td>${data.nome_produto}</td>
                         <td>${data.preco_produto}</td>
                         <td>${data.quantidade_produto}</td>
+                        <td><button onclick="deletarProduto(${data.id})" class="btn btn-danger btn-sm">Deletar</button></td>
+
                     </tr>`;
                 }
             })
@@ -131,11 +133,11 @@ function deletarProduto(id) {
             .then(response => response.json())
             .then(data => {
                 console.log(data);
-                listarProdutos(); // Chame listarProdutos novamente para atualizar a lista de produtos
+                listarProdutos(); // Chame a função listarProdutos para atualizar a lista de produtos.
             })
             .catch(error => console.error('Erro:', error));
     } else {
-        console.error('ID do produto não especificado.');
+        console.error('Não foi possível deletar o produto.');
     }
 }
 
