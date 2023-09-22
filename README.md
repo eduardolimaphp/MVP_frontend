@@ -43,7 +43,7 @@ Este projeto é um sistema de gerenciamento de produtos para uma padaria fictíc
 
 ## 🖼️ Captura de Tela
 
-![Tela Inicial](caminho/para/screenshot.png)
+![Tela Inicial](img/ScreenshotFrotend.png)
 
 ## 🔗 Links Úteis
 
