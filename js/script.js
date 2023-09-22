@@ -16,7 +16,7 @@ function listarProdutos() {
             let produtos = '';
 
             data.produtos.forEach(produto => {
-                 produtos += normalizaLinhaProduto(produto)
+                produtos += normalizaLinhaProduto(produto)
             })
 
             document.getElementById('lista-produtos').innerHTML = produtos;
@@ -131,6 +131,10 @@ function cadastrarProduto(event) {
         .then(response => response.json())
         .then(() => {
             window.location.reload();
+            document.getElementById('data_de_cadastro').value = '';
+            document.getElementById('nome_produto').value = '';
+            document.getElementById('preco_produto').value = '';
+            document.getElementById('quantidade_produto').value = '';
         })
         .catch(error => showMessageModal(error));
 }
