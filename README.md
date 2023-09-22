@@ -45,8 +45,6 @@ Este projeto é um sistema de gerenciamento de produtos para uma padaria fictíc
 
 ![Tela Inicial](caminho/para/screenshot.png)
 
-*Substitua o caminho acima pela localização real da captura de tela do seu projeto.*
-
 ## 🔗 Links Úteis
 
 - [Bootstrap 5](https://getbootstrap.com/docs/5.0/getting-started/introduction/)
